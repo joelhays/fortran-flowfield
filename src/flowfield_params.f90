@@ -23,7 +23,7 @@ contains
     real :: r
 
     call random_number(r)
-    params%cell_size = r*(20 - 5) + 5
+    params%cell_size = r*(40 - 5) + 5
     params%rows = height/params%cell_size
     params%cols = width/params%cell_size
     call random_number(r)
@@ -34,12 +34,6 @@ contains
     params%equation = floor(r*(5 - 1) + 1)
 
     print *, 'using params:'
-    ! print '(2x, a10, i10)', "cell_size:", params%cell_size
-    ! print '(2x, a10, i10)', 'rows:', params%rows
-    ! print '(2x, a10, i10)', 'cols:', params%cols
-    ! print '(2x, a10, f10.3)', 'curve:', params%curve
-    ! print '(2x, a10, f10.3)', 'zoom:', params%zoom
-    ! print '(2x, a10, i10)', "equation:", params%equation
     print *, ' params%cell_size=', params%cell_size
     print *, ' params%rows=', params%rows
     print *, ' params%cols=', params%cols
@@ -52,7 +46,7 @@ contains
     implicit none
     real :: r
 
-    allocate (presets(19))
+    allocate (presets(20))
 
     call random_number(r)
     selected_preset = max(floor(r*size(presets)), 1)
@@ -189,6 +183,13 @@ contains
     presets(19)%curve = 1.131
     presets(19)%zoom = 3.495
     presets(19)%equation = 2
+
+    presets(20)%cell_size = 8
+    presets(20)%rows = 112
+    presets(20)%cols = 200
+    presets(20)%curve = 0.464114666
+    presets(20)%zoom = 5.87129784
+    presets(20)%equation = 4
 
   end subroutine
 
