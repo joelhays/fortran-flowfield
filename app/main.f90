@@ -51,9 +51,9 @@ program main
       call clear_background(BLACK)
       call display_grid()
       call display_particles()
-      call draw_text("P - cycle presets", 0, 30, 20, WHITE)
-      call draw_text("R - random parameters", 0, 60, 20, WHITE)
-      call draw_text("D - toggle trail/particle display", 0, 90, 20, WHITE)
+      call draw_text("P - cycle presets"//c_null_char, 0, 30, 20, WHITE)
+      call draw_text("R - random parameters"//c_null_char, 0, 60, 20, WHITE)
+      call draw_text("D - toggle trail/particle display"//c_null_char, 0, 90, 20, WHITE)
       call draw_fps(0, 0)
 
     end block
