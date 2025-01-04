@@ -6,8 +6,9 @@ This intent of this project was to learn about modern fortran development
 while exploring the concept of flow fields and doing something creative.
 
 ## Screenshots 
-![01](/screenshots/01.png "01")
-![02](/screenshots/02.png "02")
+![Flow Field Animation](/screenshots/03.gif "Flow Field Animation")
+![Flow Field Screenshot 1](/screenshots/01.png "Flow Field Screenshot 1")
+![Flow Field Screenshot 2](/screenshots/02.png "Flow Field Screenshot 2")
 
 ## Getting Started
 
