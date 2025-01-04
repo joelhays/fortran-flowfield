@@ -1,0 +1,21 @@
+name = "fortran-flowfield"
+version = "0.1.0"
+license = "license"
+author = "joelhays"
+maintainer = "joelhays@users.noreply.github.com"
+copyright = "Copyright 2025, joelhays"
+[build]
+auto-executables = true
+auto-tests = true
+auto-examples = true
+module-naming = false
+link = ["raylib"]
+[install]
+library = false
+[fortran]
+implicit-typing = false
+implicit-external = false
+source-form = "free"
+[dependencies]
+fortran-raylib = { git = "https://github.com/interkosmos/fortran-raylib.git" }
+
