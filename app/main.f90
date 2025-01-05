@@ -10,10 +10,14 @@ program main
   type(color_type), dimension(7), parameter :: COLORS = &
                                                [RED, PINK, MAROON, PURPLE, &
                                                 VIOLET, DARKPURPLE, MAGENTA]
+  real, parameter :: SCAN_DURATION = 1.5
+  real :: elapsed
+  logical :: display_trail_enabled, display_grid_enabled, scan
 
-  logical :: display_trail_enabled, display_grid_enabled
+  elapsed = 0.0
   display_trail_enabled = .true.
   display_grid_enabled = .false.
+  scan = .false.
 
   call init_param_presets()
   call reset()
@@ -22,10 +26,30 @@ program main
   call set_target_fps(60)
 
   do while (.not. window_should_close())
+    elapsed = elapsed + get_frame_time()
+
+    if (elapsed > SCAN_DURATION) then
+      elapsed = 0.0
+      if (scan) then
+        selected_preset = 0
+        call reset()
+      end if
+    end if
+
     ! 'R' resets simulation with new random parameters
     if (is_key_pressed(KEY_R)) then
       selected_preset = 0
       call reset()
+    end if
+
+    ! 'S' automatically resets simulation with new random parameters every N seconds
+    if (is_key_pressed(KEY_S)) then
+      scan = .not. scan
+      if (scan) then
+        elapsed = 0.0
+        selected_preset = 0
+        call reset()
+      end if
     end if
 
     ! 'P' resets simulation and cycles through preset parameters
@@ -54,7 +78,13 @@ program main
       call draw_text("P - cycle presets"//c_null_char, 0, 30, 20, WHITE)
       call draw_text("R - random parameters"//c_null_char, 0, 60, 20, WHITE)
       call draw_text("D - toggle trail/particle display"//c_null_char, 0, 90, 20, WHITE)
+      call draw_text("S - toggle scan"//c_null_char, 0, 120, 20, WHITE)
       call draw_fps(0, 0)
+
+      if (scan) then
+        call draw_text("SCANNING..."//c_null_char, SCREEN_WIDTH/2 - 50, 10, 20, WHITE)
+
+      end if
 
     end block
     call end_drawing()

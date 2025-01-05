@@ -71,6 +71,28 @@ contains
           flowfield(i, j) = (cos(real(i) + params%zoom) + sin(real(j) + params%zoom)) + params%curve
         else if (params%equation == 4) then
           flowfield(i, j) = (cos(real(i)*params%zoom)/sin(real(j)*params%zoom))*params%curve
+        else if (params%equation == 5) then
+          block
+            real :: scale, zoom, curve, x, y, x1, y1, si, sj
+            real :: a, b, c, d
+
+            scale = 0.005
+            zoom = params%zoom
+            curve = params%curve/2
+            si = real(i)*real(params%cell_size)
+            sj = real(j)*real(params%cell_size)
+
+            a = params%r(1)*4 - 2
+            b = params%r(2)*4 - 2
+            c = params%r(3)*4 - 2
+            d = params%r(4)*4 - 2
+
+            x = (si - width/2)*scale
+            y = (sj - height/2)*scale
+            x1 = (sin(a*y*zoom) + c*cos(a*x*zoom))*curve
+            y1 = (sin(b*x*zoom) + d*cos(b*x*zoom))*curve
+            flowfield(i, j) = atan2(y1 - y, x1 - x)
+          end block
         end if
       end do
     end do

@@ -9,6 +9,7 @@ module flowfield_params
     integer :: cell_size, rows, cols
     real :: curve, zoom
     integer :: equation
+    real, dimension(4) :: r
   end type params_type
   type(params_type) :: params
 
@@ -22,16 +23,22 @@ contains
     integer, intent(in) :: width, height
     real :: r
 
+    call random_number(params%r)
+
     call random_number(r)
-    params%cell_size = r*(40 - 5) + 5
+    params%equation = floor(r*(6 - 1) + 1)
+    if (params%equation == 5) then
+      params%cell_size = r*(15 - 5) + 5
+    else
+      call random_number(r)
+      params%cell_size = r*(40 - 5) + 5
+    end if
     params%rows = height/params%cell_size
     params%cols = width/params%cell_size
     call random_number(r)
     params%curve = r*(20) + 0.01
     call random_number(r)
     params%zoom = r*(10) + 0.01
-    call random_number(r)
-    params%equation = floor(r*(5 - 1) + 1)
 
     print *, 'using params:'
     print *, ' params%cell_size=', params%cell_size
@@ -40,13 +47,14 @@ contains
     print *, ' params%curve=', params%curve
     print *, ' params%zoom=', params%zoom
     print *, ' params%equation=', params%equation
+    print *, ' params%r=', params%r
   end subroutine
 
   subroutine init_param_presets()
     implicit none
     real :: r
 
-    allocate (presets(20))
+    allocate (presets(21))
 
     call random_number(r)
     selected_preset = max(floor(r*size(presets)), 1)
@@ -190,6 +198,14 @@ contains
     presets(20)%curve = 0.464114666
     presets(20)%zoom = 5.87129784
     presets(20)%equation = 4
+
+    presets(21)%cell_size = 14
+    presets(21)%rows = 64
+    presets(21)%cols = 114
+    presets(21)%curve = 9.24388409
+    presets(21)%zoom = 1.72016275
+    presets(21)%equation = 5
+    presets(21)%r = [0.411714435, 0.234885037, 0.546080709, 0.209740341]
 
   end subroutine
 
